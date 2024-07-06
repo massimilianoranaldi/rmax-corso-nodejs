@@ -292,5 +292,5 @@ app.get('/dinamicaPersona/:id', function (req, res) { //estrae solo l'elemento d
     const persona = persone.find( (persona) => persona.id === id)
     res.json(persona)
 })
-
+console.log('kk')
 app.listen(3000)
