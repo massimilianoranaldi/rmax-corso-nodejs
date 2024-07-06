@@ -1,3 +1,12 @@
+/* ##GIT
+git rm --cached prova.html --rimuove dal monitoring il file ma lo mantiene 
+git add <nome file> / git add . --mette file sotto monitoring o tutti
+git commit 
+git push --esegue il push del progetto su git remoto
+git log -- verifica tutte le commit
+git status -- verifica i file del progetto se sono o no sotto staging 
+
+*/
 /* #4 dirname filename
 -   __dirname: percorso cartella corrente
 -   __filename : nome del file

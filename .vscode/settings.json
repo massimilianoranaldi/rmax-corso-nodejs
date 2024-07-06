@@ -1,2 +1,9 @@
 {
+    "workbench.editor.restoreViewState": true,
+    "files.watcherExclude": {
+        "**/.vscode/**": true
+    },
+    "files.exclude": {
+        "**/.vscode": true
+    }
 }
