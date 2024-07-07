@@ -1,12 +1,3 @@
-/* ##GIT
-git rm --cached prova.html --rimuove dal monitoring il file ma lo mantiene 
-git add <nome file> / git add . --mette file sotto monitoring o tutti
-git commit 
-git push --esegue il push del progetto su git remoto
-git log -- verifica tutte le commit
-git status -- verifica i file del progetto se sono o no sotto staging 
-
-*/
 /* #4 dirname filename
 -   __dirname: percorso cartella corrente
 -   __filename : nome del file
@@ -180,6 +171,7 @@ server.listen(3000);
         "start": "nodemon index.js"
     },
     cosi che l'applicazione ad ogni salvataggio rimane up-running
+    basta fare "node start"
 */
 /* #12 event emitters
 -   creare un eventemitter
@@ -261,6 +253,7 @@ app.listen(3000)
 */
 
 
+// ho costruito una specie di database nel file persone.js 
 const express = require('express')
 const app = express()
 const {persone}=require('./persone') //{persone} ne fa lo spacchettamento
@@ -270,10 +263,12 @@ app.get('/', function (req, res) {
     })
 
 
+    // mi ritorna tutto il database di persone
 app.get('/persone', function (req, res) {
     res.json({persone});
     })
 
+    // mi ritorna tutto il database di persone ma solamente 3 attributi 
 app.get('/persona', function (req, res) {
         const nuovePersone = persone.map( (persona) =>  // la funzione map suddivide l'array in singoli elementi e su ognuno estrae i 3 parametri 
         {   const {nome,cognome,eta} = persona
@@ -282,24 +277,25 @@ app.get('/persona', function (req, res) {
         res.json(nuovePersone)
 })
 
-app.get('/persone/2',  (req, res)=> { //estrae solo l'elemento dell'array che ha id='1' o altri 
+    // mi ritorna solo la persona con id =2
+app.get('/persone/2',  (req, res)=> { //estrae solo l'elemento dell'array che ha id='2' o altri 
     
     const persona = persone.find( (persona) =>  persona.id === "2")
     res.json(persona)
 }
 )
-
+    // mi ritorna solo la persona con id =1
 app.get('/persone/1',  (req, res)=> { //estrae solo l'elemento dell'array che ha id='1' o altri 
     const persona = persone.find( (persona) =>  persona.id === "1")
     res.json(persona)
 }
 )
-
+    // mi ritorna solo la persona con id passato in input 
 app.get('/dinamicaPersona/:id', function (req, res) { //estrae solo l'elemento dell'array che ha id passato 
     const {id} = req.params
     console.log(id)
     const persona = persone.find( (persona) => persona.id === id)
     res.json(persona)
 })
-console.log('kk')
+
 app.listen(3000)

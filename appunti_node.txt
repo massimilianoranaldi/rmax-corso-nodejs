@@ -1,0 +1,10 @@
+una volta istallato nodemon e inserito nel package.json 
+
+  "scripts": {
+    "start": "nodemon index.js" 
+  },
+
+  è sufficiente lanciare il comando 
+  npm start 
+
+  per tenere l'applicativo up e running 
