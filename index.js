@@ -402,7 +402,6 @@ app.listen(3000)
 -   multiple funzioni middleware app.use ([func1,func2])
 -   interrompere il flusso con un middleware  (esempio autorizzazione)
 -   middleware custom / espress (static) / terze parti
-*/
 const express = require('express')
 const app = express()
 const middlewareProva = require ('./middlewareProva')
@@ -438,5 +437,104 @@ app.get('/about',  (req, res)=> { //richiama la home page
             })        
         
         
+
+app.listen(3000)
+
+*/
+/* #24,25,26,27
+-   postman
+-   uso api GET,POST,PUT,DELETE
+   const express = require('express')
+    const app = express()
+    const {persone}=require('./persone')
+
+    app.use(express.json()) //uso questo middleware per gestoire i json 
+
+    app.get('/',  (req, res)=> { //richiama la home page ma metto in mezzo la chiamata al middlewareProva
+        res.sendFile('homepage.html',{root: __dirname+"/public"})
+    })
+
+    app.get('/api/persone/',  (req, res)=> { 
+        res.status(200).json({success:true,data:persone})
+        })
+
+    app.get('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const persona = persone.find( (persona) => persona.id === id)
+        if(!persona)
+        {
+            return res.status(404).json({messaggio: "non trovato",code: 404})
+        }
+        res.json({success:true,data:persona})
+    })
+
+    app.post('/api/persone',  (req, res)=> { 
+        const persona = req.body
+        console.log(persona)
+        persone.push(persona)
+        res.status(200).json({success:true,data:persone})
+        })
+
+    app.put('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const persona = req.body
+        persone[Number(id)-1]=persona
+        res.status(200).json({success:true,data:persone})
+    })
+
+    app.delete('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const index = persone.findIndex( (persona) => persona.id === id)
+        persone.splice(index,1)
+        res.status(200).json({success:true,data:persone})
+    })  
+
+app.listen(3000)
+*/
+
+    const express = require('express')
+    const app = express()
+    const {persone}=require('./persone')
+
+    app.use(express.json()) //uso questo middleware per gestoire i json 
+
+    app.get('/',  (req, res)=> { //richiama la home page ma metto in mezzo la chiamata al middlewareProva
+        res.sendFile('homepage.html',{root: __dirname+"/public"})
+    })
+
+    app.get('/api/persone/',  (req, res)=> { 
+        res.status(200).json({success:true,data:persone})
+        })
+
+    app.get('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const persona = persone.find( (persona) => persona.id === id)
+        if(!persona)
+        {
+            return res.status(404).json({messaggio: "non trovato",code: 404})
+        }
+        res.json({success:true,data:persona})
+    })
+
+    app.post('/api/persone',  (req, res)=> { 
+        const persona = req.body
+        console.log(persona)
+        persone.push(persona)
+        res.status(200).json({success:true,data:persone})
+        })
+
+    app.put('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const persona = req.body
+        persone[Number(id)-1]=persona
+        res.status(200).json({success:true,data:persone})
+    })
+
+    app.delete('/api/persone/:id',  (req, res)=> { 
+        const {id} = req.params
+        const index = persone.findIndex( (persona) => persona.id === id)
+        persone.splice(index,1)
+        res.status(200).json({success:true,data:persone})
+    })  
 
 app.listen(3000)
