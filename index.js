@@ -246,12 +246,10 @@ app.get('/about', function (req, res) {
      })
 app.listen(3000)
 */
-/* #19 express json
+/* #19 - #21 express json
 -   pulire codice 
 -   res json esempio
 -   res json con file esterno
-*/
-
 
 // ho costruito una specie di database nel file persone.js 
 const express = require('express')
@@ -297,5 +295,102 @@ app.get('/dinamicaPersona/:id', function (req, res) { //estrae solo l'elemento d
     const persona = persone.find( (persona) => persona.id === id)
     res.json(persona)
 })
+
+app.listen(3000)
+
+*/
+/* #22 QUERY STRING  (url param)
+-   query string 
+-   aggiungere persone
+-   aggiungere input per la ricerca
+-   search e limit
+-   gestire risultato vuoto
+*/
+
+// ho costruito una specie di database nel file persone.js 
+const express = require('express')
+const app = express()
+const {persone}=require('./persone') //{persone} ne fa lo spacchettamento
+
+app.get('/', function (req, res) { //richiama la home page
+    res.sendFile('homepage.html',{root: __dirname+"/public"})
+    })
+
+
+    // mi ritorna tutto il database di persone
+app.get('/persone', function (req, res) {
+    res.json({persone});
+    })
+
+    // mi ritorna tutto il database di persone ma solamente 3 attributi 
+app.get('/persona', function (req, res) {
+        const nuovePersone = persone.map( (persona) =>  // la funzione map suddivide l'array in singoli elementi e su ognuno estrae i 3 parametri 
+        {   const {nome,cognome,eta} = persona
+            return {nome,cognome,eta}
+        })
+        res.json(nuovePersone)
+})
+
+    // mi ritorna solo la persona con id =2
+app.get('/persona/2',  (req, res)=> { //estrae solo l'elemento dell'array che ha id='2' o altri 
+    
+    const persona = persone.find( (persona) =>  persona.id === "2")
+    res.json(persona)
+}
+)
+
+    
+    // mi ritorna solo la persona con id =1
+app.get('/persona/1',  (req, res)=> { //estrae solo l'elemento dell'array che ha id='1' o altri 
+    const persona = persone.find( (persona) =>  persona.id === "1")
+    res.json(persona)
+}
+)
+    //UTILIZZO DEL req.param col carattere ":"
+    // mi ritorna solo la persona con id passato in input 
+app.get('/personeDinamiche/:id', function (req, res) { //estrae solo l'elemento dell'array che ha id passato 
+    const {id} = req.params
+    console.log(id)
+    const persona = persone.find( (persona) => persona.id === id)
+    if(!persona)
+    {
+        return res.status(404).json({messaggio: "non trovato",code: 404})
+    }
+    res.json(persona)
+})
+
+    //UTILIZZO DEL req.query col carattere "?"
+    //es . http://localhost:3000/persone/search?nome=luca&cognome=rossi
+
+    //questa get riceve in input http://localhost:3000/persone/search?query=A
+
+    app.get('/persone/search',  (req, res)=> { 
+        
+        const {query,limit} =req.query //suddivide la res query negli unici due parametri
+        let personeFiltrate = [...persone] //assegna ad una variabile il contenuto dell'array persone
+        console.log("stampo query",query)
+        console.log("stampo query",limit)
+        //console.log("stampo personeFiltrate",persone)
+        if (query) //se query ha dei valori 
+        {
+            personeFiltrate=personeFiltrate.filter( (persona) => { //creo una funzione alla quale passo ogni elemento dell'array che chiamo persona
+               //l'oggetto persona può referenziare tutti gli attributi 
+                return persona.nome.startsWith(query) //e ritorno le perone che inziamo per il valore indicato in query
+            }
+            )
+        }
+        
+        if (limit) //se query ha dei valori 
+        {
+            personeFiltrate=personeFiltrate.slice(0,Number(limit)) //da solo il numero di risultati indicato nel limit 
+        }
+
+        if (personeFiltrate.length<1){
+            return res.status(200).json({success: "true", data: []})
+        }
+
+        res.status(200).json(personeFiltrate)
+    })
+    
 
 app.listen(3000)

@@ -27,6 +27,32 @@ const persone =[
 ,
 {
     id:"3",
+    nome:"Ario",
+    cognome:"Rossi",
+    eta:"50",
+    indirizzo: {
+        citta:"Roma",
+        via:"via tu",
+        cap:"00175"
+    },
+    interessi : ["calcio","pallavolo"]
+}
+,
+{
+    id:"4",
+    nome:"Mario",
+    cognome:"Rossi",
+    eta:"50",
+    indirizzo: {
+        citta:"Roma",
+        via:"via tu",
+        cap:"00175"
+    },
+    interessi : ["calcio","pallavolo"]
+}
+,
+{
+    id:"5",
     nome:"Mario",
     cognome:"Rossi",
     eta:"50",
