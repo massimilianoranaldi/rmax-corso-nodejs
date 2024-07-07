@@ -5,5 +5,44 @@ git commit
 git push --esegue il push del progetto su git remoto
 git log -- verifica tutte le commit
 git status -- verifica i file del progetto se sono o no sotto staging 
+git status <nome file> -- la stessa cosa ma sul singolo file
 
+UC1:
+    se ho aggiunto un file al repository git 
+            git add prova.html 
+    ed eseguito la prima commit del progetto
+            git commit
+    poi ho eseguito 5 modifiche aggiungendo sempre il file al repository con il comando git add 
+    ma non ho mai eseguito la commit , l'unica cosa che posso fare e ripristinare il file 
+    all'ultima versione committata in questo modo :
+    
+    1.  Rimuovi il file dall'index (stage):
+        git restore --staged prova.html
+    2.  Ripristina la versione precedente del file nel working directory:
+        git restore prova.html
+
+    nota : Se hai eseguito 5 modifiche e le hai aggiunte con git add senza fare commit, 
+    non puoi recuperare versioni intermedie direttamente tramite Git. In tal caso, 
+    una pratica migliore è fare commit per ogni modifica significativa in modo da poter recuperare 
+    qualsiasi versione in futuro.
+
+UC2 
+    se voglio modificare il commento dell'ultimo commit :
+    1.  git commit --amend
+    si pre l'editor che ti consente di modificare il commento 
+    2.  modificare il commento e poi salvare e chiudere
+
+UC3
+    immegginamo che sul file ho eseguito più commit e voglio ripristinarne una :
+    1.  recupero tutte le commit di quel file con il comando  (--oneline mette tutto su una riga molto meglio)
+            git log --oneline prova.html
+    2.  individuo la versione che devo ripristinare e metto in checkout il file 
+            git checkout b932815 -- prova.html
+        a video il codice viene sovrascritto 
+    3.  ora faccio git add e poi git commit se voglio confermare 
+    4.  se invece mi sono sbagliato e voglio rimuovere il checkout devo 
+            git restore --staged prova.html
+        togliere il file dalla staging
+    5.  ripristinare la vecchia versione 
+            git restore prova.html 
 */
