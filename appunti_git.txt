@@ -1,6 +1,7 @@
 /* ##GIT
 git add <nome file> / git add . --mette file sotto monitoring o tutti
-git rm --cached prova.html --rimuove dal monitoring il file ma lo mantiene 
+"git rm --cached prova.html" --rimuove dal monitoring (staging) il file ma lo mantiene su disco
+"git rm prova.html"  --rimuove il file e tutta la storia dalla directiory e dal disco
 git commit 
 git push --esegue il push del progetto su git remoto
 git log -- verifica tutte le commit
@@ -45,4 +46,6 @@ UC3
         togliere il file dalla staging
     5.  ripristinare la vecchia versione 
             git restore prova.html 
+
+UC4 
 */
