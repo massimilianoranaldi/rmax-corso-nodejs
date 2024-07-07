@@ -47,5 +47,5 @@ UC3
     5.  ripristinare la vecchia versione 
             git restore prova.html 
 
-UC4 
+git mv oldname.txt newname.txt -- cambia il nome ad un file. poi è necessaria la commit per confermare
 */

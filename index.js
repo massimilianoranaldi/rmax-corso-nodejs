@@ -305,7 +305,6 @@ app.listen(3000)
 -   aggiungere input per la ricerca
 -   search e limit
 -   gestire risultato vuoto
-*/
 
 // ho costruito una specie di database nel file persone.js 
 const express = require('express')
@@ -392,5 +391,52 @@ app.get('/personeDinamiche/:id', function (req, res) { //estrae solo l'elemento 
         res.status(200).json(personeFiltrate)
     })
     
+
+app.listen(3000)
+*/
+/* #23 MIDDLEWARE
+-   creare un middleware di esempio per due endpoint (req,res,next)
+-   parametro next
+-   app.use
+-   app.use per alcuni percorsi
+-   multiple funzioni middleware app.use ([func1,func2])
+-   interrompere il flusso con un middleware  (esempio autorizzazione)
+-   middleware custom / espress (static) / terze parti
+*/
+const express = require('express')
+const app = express()
+const middlewareProva = require ('./middlewareProva')
+const auth = require ('./auth')
+
+//app.use(middlewareProva) //consente di applicare il middleawareProva a tutta l'app anzichè ripeterlo per ogni get
+//app.use('/persone',middlewareProva) //consente di applicare il middleawareProva solo ad alcuni percorsi da un path in poi
+//app.use('/persone',[auth,middlewareProva]) //posso inserire più middleware e va inserito prima degli endpoint
+app.use(middlewareProva) //posso inserire più middleware e va inserito prima degli endpoint
+// app.get('/',middlewareProva, function (req, res) { //richiama la home page ma metto in mezzo la chiamata al middlewareProva
+//     res.sendFile('homepage.html',{root: __dirname+"/public"})
+//     })
+// app.get('/about',middlewareProva, function (req, res) { //richiama la home page
+//     res.sendFile('about.html',{root: __dirname+"/public"})
+//     })
+
+app.get('/',  (req, res)=> { //richiama la home page ma metto in mezzo la chiamata al middlewareProva
+    res.sendFile('homepage.html',{root: __dirname+"/public"})
+    })
+app.get('/about',  (req, res)=> { //richiama la home page
+    res.sendFile('about.html',{root: __dirname+"/public"})
+    })
+
+    app.get('/persone/ciao',  (req, res)=> { //richiama la home page
+        res.sendFile('about.html',{root: __dirname+"/public"})
+        })
+    app.get('/persone/miao',  (req, res)=> { //richiama la home page
+        res.sendFile('about.html',{root: __dirname+"/public"})
+        })        
+    
+        app.get('/areaprivata',auth,  (req, res)=> { //richiama la home page
+            res.send('AREA PRIVATA')
+            })        
+        
+        
 
 app.listen(3000)
