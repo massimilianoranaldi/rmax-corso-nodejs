@@ -491,50 +491,21 @@ app.listen(3000)
 
 app.listen(3000)
 */
-
+/* #28 ROUTING
+-   creare file di routing 
+-   importare modulo
+-   utilizzare router
+-   esempio con piu router
+*/
     const express = require('express')
     const app = express()
-    const {persone}=require('./persone')
+    const personeRouter=require('./routes/personeRoutes')
 
     app.use(express.json()) //uso questo middleware per gestoire i json 
+    app.use('/api/persone',personeRouter) //uso questo router per questo path ma posso usarne anche piu di uno 
 
     app.get('/',  (req, res)=> { //richiama la home page ma metto in mezzo la chiamata al middlewareProva
         res.sendFile('homepage.html',{root: __dirname+"/public"})
     })
 
-    app.get('/api/persone/',  (req, res)=> { 
-        res.status(200).json({success:true,data:persone})
-        })
-
-    app.get('/api/persone/:id',  (req, res)=> { 
-        const {id} = req.params
-        const persona = persone.find( (persona) => persona.id === id)
-        if(!persona)
-        {
-            return res.status(404).json({messaggio: "non trovato",code: 404})
-        }
-        res.json({success:true,data:persona})
-    })
-
-    app.post('/api/persone',  (req, res)=> { 
-        const persona = req.body
-        console.log(persona)
-        persone.push(persona)
-        res.status(200).json({success:true,data:persone})
-        })
-
-    app.put('/api/persone/:id',  (req, res)=> { 
-        const {id} = req.params
-        const persona = req.body
-        persone[Number(id)-1]=persona
-        res.status(200).json({success:true,data:persone})
-    })
-
-    app.delete('/api/persone/:id',  (req, res)=> { 
-        const {id} = req.params
-        const index = persone.findIndex( (persona) => persona.id === id)
-        persone.splice(index,1)
-        res.status(200).json({success:true,data:persone})
-    })  
-
-app.listen(3000)
+    app.listen(3000)
